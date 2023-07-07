@@ -1,0 +1,115 @@
+﻿@page
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using StudentCRM.Data.Entities
+@using StudentCRM.ViewModel.StudentResult
+@model StudentCRM.web.Pages.AdminPanel.StudentResult.IndexModel
+@{
+    Layout = "_AdminPanelLayout";
+}
+
+
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="/">خانه</a></li>
+                    <li class="breadcrumb-item active">مدیریت نتایج</li>
+                </ol>
+            </div>
+            <div class="col-sm-6">
+
+            </div>
+
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+@{
+    ViewData["Title"] = "نتیجه ها";
+}
+
+<div class="card text-dark bg-white border-0 shadow">
+
+    <div class="card-body">
+        <div class="d-grid d-lg-block mb-2 text-end">
+            <a asp-page="Create" class="btn btn-outline-secondary">
+                افزودن نتیجه
+                <span class="bi bi-plus-circle mt-5"></span>
+            </a>
+        </div>
+        <form class="alert alert-primary   Search-form-via-ajax">
+            <input type="hidden" asp-for="ShowResults.Pagination.CurrentPage" />
+            <input type="hidden" asp-for="ShowResults.Pagination.PageCount" />
+            <div asp-validation-summary="All" class="text-danger asp-validation-summary"></div>
+            <h5>
+                جستجو در
+                @ViewData["Title"]
+            </h5>
+            <div class="row">
+                <div class="col-12 col-sm-6 col-lg-3 my-2">
+                    <label class="form-label" asp-for="ShowResults.SearchResult.FullName"></label>
+                    <input class="form-control" asp-for="ShowResults.SearchResult.FullName" />
+                    <span class="span-error-message" asp-validation-for="ShowResults.SearchResult.FullName"></span>
+                </div>
+
+                <div class="col-12 col-sm-6 col-lg-3 my-2">
+                    <label class="form-label" asp-for="ShowResults.SearchResult.Code"></label>
+                    <input class="form-control" asp-for="ShowResults.SearchResult.Code" />
+                    <span class="span-error-message" asp-validation-for="ShowResults.SearchResult.Code"></span>
+                </div>
+
+                <div class="col-12 col-sm-6 col-lg-3 my-2">
+                    <label class="form-label" asp-for="ShowResults.SearchResult.StudentNumber"></label>
+                    <input class="form-control" asp-for="ShowResults.SearchResult.StudentNumber" />
+                    <span class="span-error-message" asp-validation-for="ShowResults.SearchResult.StudentNumber"></span>
+                </div>
+
+                <div class="col-12 col-sm-6 col-lg-3 my-2">
+                    <label class="form-label" asp-for="ShowResults.SearchResult.Status"></label>
+                    <select class="form-control" asp-for="ShowResults.SearchResult.Status" asp-items="Html.GetEnumSelectList<StatusSearch>()">
+                       
+                    </select>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-3 my-2">
+                    <label class="form-label" asp-for="ShowResults.SearchResult.CourseId"></label>
+                    <select class="form-control custom-select2" asp-for="ShowResults.SearchResult.CourseId" asp-items="Model.ShowResults.SearchResult.Courses"></select>
+                </div>
+                <div class="col-12 col-sm-6 col-lg-3 my-2">
+                    <label class="form-label" asp-for="ShowResults.SearchResult.TermId"></label>
+                    <select class="form-control custom-select2" asp-for="ShowResults.SearchResult.TermId" asp-items="Model.ShowResults.SearchResult.Terms"></select>
+                </div>
+                <div class="col-12 my-2">
+                    <div class="d-grid d-lg-block">
+                        <button disabled="disabled" type="submit" class="btn btn-info d-inline-flex align-items-center Search-form-loading">
+                            جستجو
+                            <span class="spinner-border spinner-border-sm m-2 d-none"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="read-data-table">
+                <div class="text-center data-table-loading">
+                    <img src="/images/Application/loading.gif" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section script{
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/lib/select2/js/select2.min.js"></script>
+    <script src="~/lib/select2/js/i18n/fa.min.js"></script>
+}
+
+@section CustomScripts{
+    <script src="~/Pages/AdminPanel/StudentResult/Index.cshtml.js"></script>
+}
+@section Style
+{
+    <link rel="stylesheet" href="~/lib/select2/css/select2.min.css" />
+    <link rel="stylesheet" href="~/lib/select2-bootstrap-5-theme/select2-bootstrap-5-theme.rtl.min.css" />
+}

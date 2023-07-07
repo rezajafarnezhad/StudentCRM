@@ -1,0 +1,24 @@
+﻿
+
+@model StudentCRM.ViewModel.term.CreateTerm
+
+<form class="alert alert-secondary custom-ajax-form" asp-page-handler="Add" method="post" call-function-in-the-end="FuncAdd">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="row">
+        <div class="col-12 col-sm-12 col-lg-12 my-2">
+            <label class="form-label" asp-for="Name"></label>
+            <input class="form-control" asp-for="Name" />
+            <span class="span-error-message" asp-validation-for="Name"></span>
+        </div>
+        <div class="col-12 my-2">
+            <div class="d-grid">
+               
+                <button type="submit" class="btn btn-app btn-block  submit-custom-ajax-button">
+                    <i class="fa fa-save"> افزودن</i>
+                   
+                </button>
+            </div>
+
+        </div>
+    </div>
+</form>

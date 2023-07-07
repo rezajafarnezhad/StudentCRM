@@ -1,0 +1,46 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>پیگیری نتیجه امتحان</title>
+    <!-- Styles -->
+    <link type="text/css" href="~/ResultStudent/css/bootstrap.min.css" rel="stylesheet" />
+    <link type="text/css" href="~/ResultStudent/css/style.css" rel="stylesheet" />
+    <link href="~/plugins/toastr.js/toastr.min.css" rel="stylesheet" />
+    <!-- /Styles -->
+</head>
+<body class="rtl">
+    <div class="container register">
+        <div class="row">
+            <!-- Right Side Title -->
+            <div class="col-12 col-md-3 register-right">
+                <img src="https://image.ibb.co/n7oTvU/logo_white.png" alt="" />
+                <h3>خوش آمدید</h3>
+                <p>با وارد کردن کد دانشجویی و کد پیگیری از نتیجه آزمون خود مطلع شوید.</p>
+               
+            </div>
+            <!-- /Right Side Title -->
+            <!-- Left Side Forms -->
+            <div class="col-12 col-md-9">
+
+                @RenderBody()
+
+            </div>
+            <!-- /Left Side Forms -->
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="~/ResultStudent/js/jquery-3.1.1.min.js"></script>
+<script src="~/ResultStudent/js/bootstrap.min.js"></script>
+<script src="~/plugins/toastr.js/toastr.min.js"></script>
+<script src="~/js/site.js"></script>
+
+@await RenderSectionAsync("script", false)
+@await RenderSectionAsync("CustomScripts", false)
+    <!-- /Scripts -->
+
+</body><!-- This template has been downloaded from Webrubik.com -->
+</html>

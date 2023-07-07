@@ -1,0 +1,106 @@
+﻿@page
+@model StudentCRM.web.Pages.AdminPanel.StudentResult.CreateModel
+@{
+    Layout = "_AdminPanelLayout";
+}
+
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using StudentCRM.Data.Entities
+
+
+
+
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="/">خانه</a></li>
+                    <li class="breadcrumb-item active">افزودن نتایج</li>
+                </ol>
+            </div>
+            <div class="col-sm-6">
+
+            </div>
+
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+@{
+    ViewData["Title"] = "نتیجه";
+}
+
+<div class="card text-dark bg-white border-0 shadow">
+
+    <div class="card-body">
+        <form method="post" class="alert alert-secondary public-ajax-form" asp-page="Create" call-function-in-the-end="FuncAdd">
+            <div class="row">
+                <div class="col-md-6 col-sm-12  my-2">
+                    <label class="form-label" asp-for="CreateResult.FullName"></label>
+                    <input class="form-control" asp-for="CreateResult.FullName" />
+                    <span class="text-danger" asp-validation-for="CreateResult.FullName"></span>
+                </div>
+                <div class="col-md-6 col-sm-12  my-2">
+                    <label class="form-label" asp-for="CreateResult.Code"></label>
+                    <input class="form-control" asp-for="CreateResult.Code" />
+                    <span class="text-danger" asp-validation-for="CreateResult.Code"></span>
+                </div>
+                <div class="col-md-6 col-sm-12  my-2">
+                    <label class="form-label" asp-for="CreateResult.StudentNumber"></label>
+                    <input class="form-control" asp-for="CreateResult.StudentNumber" />
+                    <span class="text-danger" asp-validation-for="CreateResult.StudentNumber"></span>
+                </div>
+                <div class="col-md-6 col-sm-6 col-lg-3 my-2">
+                    <label class="form-label" asp-for="CreateResult.Status"></label>
+                    <select class="form-control" asp-for="CreateResult.Status" asp-items="Html.GetEnumSelectList<Status>()"></select>
+                </div>
+                <div class="col-md-6 col-sm-6 col-lg-3 my-2">
+                    <label class="form-label" asp-for="CreateResult.CourseId"></label>
+                    <select class="form-control custom-select2" asp-for="CreateResult.CourseId" asp-items="@Model.CreateResult.Courses"></select>
+                </div>
+                <div class="col-md-6 col-sm-6 col-lg-3 my-2">
+                    <label class="form-label" asp-for="CreateResult.TermId"></label>
+                    <select class="form-control custom-select2" asp-for="CreateResult.TermId" asp-items="@Model.CreateResult.Terms"></select>
+                </div>
+                <div class="col-md-6 col-sm-12 col-lg-12 my-2">
+                    <label class="form-label" asp-for="CreateResult.Score"></label>
+                    <input class="form-control" asp-for="CreateResult.Score" />
+                    <span class="text-danger" asp-validation-for="CreateResult.StudentNumber"></span>
+                </div>
+
+                <div class="col-md-6 col-sm-12  my-2">
+                    <label class="form-label" asp-for="CreateResult.Description"></label>
+                    <textarea class="form-control" asp-for="CreateResult.Description" rows="3"></textarea>
+                    <span class="text-danger" asp-validation-for="CreateResult.Description"></span>
+                </div>
+
+                <div class="col-12 my-2">
+                    <div class="d-grid">
+
+                        <button class="btn btn-app btn-block">
+                            <i class="fa fa-save"> افزودن</i>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section script{
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/lib/select2/js/select2.min.js"></script>
+    <script src="~/lib/select2/js/i18n/fa.min.js"></script>
+}
+
+@section CustomScripts{
+    <script src="~/Pages/AdminPanel/StudentResult/Create.cshtml.js"></script>
+}
+@section Style
+{
+    <link rel="stylesheet" href="~/lib/select2/css/select2.min.css" />
+    <link rel="stylesheet" href="~/lib/select2-bootstrap-5-theme/select2-bootstrap-5-theme.rtl.min.css" />
+}

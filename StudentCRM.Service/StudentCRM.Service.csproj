@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\StudentCRM.Data\StudentCRM.Data.csproj" />
+    <ProjectReference Include="..\StudentCRM.ViewModel\StudentCRM.ViewModel.csproj" />
+  </ItemGroup>
+
+</Project>

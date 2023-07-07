@@ -1,0 +1,86 @@
+﻿@page
+@model StudentCRM.web.Pages.AdminPanel.Course.IndexModel
+
+@{
+    Layout = "_AdminPanelLayout";
+}
+
+
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="/">خانه</a></li>
+                    <li class="breadcrumb-item active">مدیریت دروس</li>
+                </ol>
+            </div>
+            <div class="col-sm-6">
+
+            </div>
+
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+@{
+    ViewData["Title"] = "دروس";
+}
+
+<div class="card text-dark bg-white border-0 shadow">
+
+    <div class="card-body">
+        <div class="d-grid d-lg-block mb-2 text-end">
+            <a asp-page-handler="Add" class="btn btn-outline-secondary show-modal-form-button" functionNameToCallInTheEnd="EditBrandFunction">
+                افزودن درس
+                <span class="bi bi-plus-circle mt-5"></span>
+            </a>
+        </div>
+        <form class="alert alert-primary   Search-form-via-ajax">
+            <input type="hidden" asp-for="Courses.Pagination.CurrentPage" />
+            <input type="hidden" asp-for="Courses.Pagination.PageCount" />
+            <div asp-validation-summary="All" class="text-danger asp-validation-summary"></div>
+            <h5>
+                جستجو در
+                @ViewData["Title"]
+            </h5>
+            <div class="row">
+                <div class="col-12 col-sm-6 col-lg-3 my-2">
+                    <label class="form-label" asp-for="Courses.SearchCourse.Name"></label>
+                    <input class="form-control" asp-for="Courses.SearchCourse.Name" />
+                    <span class="span-error-message" asp-validation-for="Courses.SearchCourse.Name"></span>
+                </div>  
+                
+                <div class="col-12 col-sm-6 col-lg-3 my-2">
+                    <label class="form-label" asp-for="Courses.SearchCourse.Unit"></label>
+                    <input class="form-control" asp-for="Courses.SearchCourse.Unit" />
+                    <span class="span-error-message" asp-validation-for="Courses.SearchCourse.Unit"></span>
+                </div>
+
+                <div class="col-12 my-2">
+                    <div class="d-grid d-lg-block">
+                        <button disabled="disabled" type="submit" class="btn btn-info d-inline-flex align-items-center Search-form-loading">
+                            جستجو
+                            <span class="spinner-border spinner-border-sm m-2 d-none"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="read-data-table">
+                <div class="text-center data-table-loading">
+                    <img src="/images/Application/loading.gif" />
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section script{
+    <partial name="_ValidationScriptsPartial" />
+}
+
+@section CustomScripts{
+    <script src="~/Pages/AdminPanel/Course/Index.cshtml.js"></script>
+}

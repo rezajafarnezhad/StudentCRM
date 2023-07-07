@@ -1,0 +1,61 @@
+﻿
+@model StudentCRM.ViewModel.StudentResult.ShowStudentResultInSite
+<div class="wrapper">
+    <!-- start text box -->
+
+    <div class="card">
+        <div class="card-header border-transparent">
+            <h3 class="card-title text-center">نتیجه آزمون شما</h3>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table m-0">
+                    <thead>
+                        <tr>
+                            <th>شماره دانشجویی</th>
+                            <th>نام کامل</th>
+                            <th>درس</th>
+                            <th>نمره</th>
+                            <th>ترم</th>
+                            <th>وضعیت</th>
+                            <th>پیام مدرس</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>@Model.StudentNumber</td>
+                            <td>@Model.FullName</td>
+                            <td>@Model.CourseName</td>
+                            <td>@Model.Score</td>
+                            <td>@Model.TermName</td>
+                            <td>
+                                @if (Model.Status == StudentCRM.Data.Entities.Status.accept.ToString())
+                                {
+
+
+                                    <span class="badge badge-success">قبول</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-danger">مردود</span>
+
+                                }
+                            </td>
+                            <td>
+                                @Model.Description
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- /.table-responsive -->
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer clearfix">
+            <a href="javascript:void(0)" class="btn btn-sm btn-info float-left">سفارش جدید</a>
+            <a href="/StudentResult" class="btn btn-sm btn-secondary float-right">بستن</a>
+        </div>
+        <!-- /.card-footer -->
+    </div>
+</div>

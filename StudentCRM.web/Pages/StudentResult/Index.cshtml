@@ -1,0 +1,46 @@
+﻿
+@page
+@model StudentCRM.web.Pages.StudentResult.IndexModel
+@{
+    Layout = "_StudentRequestResultLayout";
+}
+
+<div class="register-left p-3">
+    <!-- Tabs Nav-bar -->
+    <!-- /Tabs Nav-bar -->
+    <div class="tab-content" id="myTabContent">
+        <!-- Tab 1 -->
+        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+            <h3 class="register-heading text-light">مشاهده نتیجه آزمون</h3>
+            <form method="post" asp-page="Index" class="public-ajax-form" call-function-in-the-end="FuncAdd">
+                <div class="row register-form mx-auto">
+                    <div class="col-12 col-md-6">
+                        <div class="form-group">
+                            <input type="text" class="form-control" asp-for="Result.StudentNumber" placeholder="* کد دانشجویی" />
+                            <span class="text-warning" asp-validation-for="Result.StudentNumber"></span>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <div class="form-group">
+                            <input type="text" class="form-control" asp-for="Result.Code" placeholder="* کد پیگیری" />
+                            <span class="text-warning" asp-validation-for="Result.Code"></span>
+                        </div>
+                        <input type="submit" class="btnRegister" value="مشاهده نمره" />
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>
+<div class="tab-content" id="myResultContent">
+
+
+</div>
+@section script{
+    <partial name="_ValidationScriptsPartial" />
+}
+
+@section CustomScripts{
+    <script src="~/Pages/StudentResult/Index.cshtml.js"></script>
+}
