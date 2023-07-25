@@ -2,6 +2,7 @@
 @model StudentCRM.web.Pages.AdminPanel.StudentResult.CreateModel
 @{
     Layout = "_AdminPanelLayout";
+
 }
 
 @using Microsoft.AspNetCore.Mvc.TagHelpers
@@ -30,47 +31,85 @@
 </section>
 @{
     ViewData["Title"] = "نتیجه";
+    var fullName = ViewData["FullName"];
 }
 
+<div class="col-md-12">
+    <!-- Widget: user widget style 1 -->
+    <div class="card card-widget widget-user">
+        <!-- Add the bg color to the header using any of the bg-* classes -->
+        <div class="widget-user-header bg-info-active">
+            <h3 class="widget-user-username">ثبت نمره</h3>
+            <h5 class="widget-user-desc">اطلاعات دانشجویی</h5>
+        </div>
+        <div class="widget-user-image">
+            <img class="img-circle elevation-2" src="~/Images/St.png" alt="User Avatar">
+        </div>
+        <div class="card-footer">
+            <div class="row">
+                <div class="col-sm-4 border-left">
+                    <div class="description-block">
+                        <h5 class="description-header">نام و نام خانوادگی</h5>
+                        <hr />
+                        <span class="description-text">@fullName</span>
+                    </div>
+                    <!-- /.description-block -->
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-4 border-left">
+                    <div class="description-block">
+                        <h5 class="description-header">شماره دانشجویی</h5>
+                        <hr />
+                        <span class="description-text">@ViewData["Number"]</span>
+                    </div>
+                    <!-- /.description-block -->
+                </div>
+                <!-- /.col -->
+                <div class="col-sm-4">
+                    <div class="description-block">
+                        <h5 class="description-header">کد ملی</h5>
+                        <hr />
+                        <span class="description-text">@ViewData["Code"]</span>
+                    </div>
+                    <!-- /.description-block -->
+                </div>
+                <!-- /.col -->
+            </div>
+            <!-- /.row -->
+        </div>
+    </div>
+    <!-- /.widget-user -->
+</div>
+
 <div class="card text-dark bg-white border-0 shadow">
+    
 
     <div class="card-body">
-        <form method="post" class="alert alert-secondary public-ajax-form" asp-page="Create" call-function-in-the-end="FuncAdd">
+        <form method="post" class="alert alert-primary public-ajax-form" asp-page="Create" call-function-in-the-end="FuncAdd">
+            <input type="hidden" asp-for="CreateResult.StudentId" />
             <div class="row">
-                <div class="col-md-6 col-sm-12  my-2">
-                    <label class="form-label" asp-for="CreateResult.FullName"></label>
-                    <input class="form-control" asp-for="CreateResult.FullName" />
-                    <span class="text-danger" asp-validation-for="CreateResult.FullName"></span>
-                </div>
-                <div class="col-md-6 col-sm-12  my-2">
-                    <label class="form-label" asp-for="CreateResult.Code"></label>
-                    <input class="form-control" asp-for="CreateResult.Code" />
-                    <span class="text-danger" asp-validation-for="CreateResult.Code"></span>
-                </div>
-                <div class="col-md-6 col-sm-12  my-2">
-                    <label class="form-label" asp-for="CreateResult.StudentNumber"></label>
-                    <input class="form-control" asp-for="CreateResult.StudentNumber" />
-                    <span class="text-danger" asp-validation-for="CreateResult.StudentNumber"></span>
-                </div>
-                <div class="col-md-6 col-sm-6 col-lg-3 my-2">
-                    <label class="form-label" asp-for="CreateResult.Status"></label>
-                    <select class="form-control" asp-for="CreateResult.Status" asp-items="Html.GetEnumSelectList<Status>()"></select>
-                </div>
                 <div class="col-md-6 col-sm-6 col-lg-3 my-2">
                     <label class="form-label" asp-for="CreateResult.CourseId"></label>
                     <select class="form-control custom-select2" asp-for="CreateResult.CourseId" asp-items="@Model.CreateResult.Courses"></select>
                 </div>
                 <div class="col-md-6 col-sm-6 col-lg-3 my-2">
+                    <label class="form-label" asp-for="CreateResult.Score"></label>
+                    <input class="form-control" asp-for="CreateResult.Score"/>
+                    <span class="text-danger" asp-validation-for="CreateResult.Score"></span>
+                </div>
+                <div class="col-md-6 col-sm-6 col-lg-3 my-2">
                     <label class="form-label" asp-for="CreateResult.TermId"></label>
                     <select class="form-control custom-select2" asp-for="CreateResult.TermId" asp-items="@Model.CreateResult.Terms"></select>
                 </div>
-                <div class="col-md-6 col-sm-12 col-lg-12 my-2">
-                    <label class="form-label" asp-for="CreateResult.Score"></label>
-                    <input class="form-control" asp-for="CreateResult.Score" />
-                    <span class="text-danger" asp-validation-for="CreateResult.StudentNumber"></span>
+                <div class="col-md-6 col-sm-6 col-lg-3 my-2">
+                    <label class="form-label" asp-for="CreateResult.Status"></label>
+                    <select class="form-control" asp-for="CreateResult.Status" asp-items="Html.GetEnumSelectList<Status>()"></select>
                 </div>
 
-                <div class="col-md-6 col-sm-12  my-2">
+               
+              
+
+                <div class="col-md-12 col-sm-12  my-2">
                     <label class="form-label" asp-for="CreateResult.Description"></label>
                     <textarea class="form-control" asp-for="CreateResult.Description" rows="3"></textarea>
                     <span class="text-danger" asp-validation-for="CreateResult.Description"></span>

@@ -1,7 +1,7 @@
 ﻿function FuncAdd(message, data) {
-
+    
     showToastr('success', message);
-    GetHtmlWithAjax(`${location.pathname}?handler=ShowResult`, data, 'showResult', null);
+    GetHtmlWithAjax(`${location.pathname}?handler=ShowResult`, { studentId: data }, 'showResult', null);
 }
 
 function showResult(data) {

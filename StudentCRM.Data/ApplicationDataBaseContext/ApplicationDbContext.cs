@@ -13,6 +13,7 @@ namespace StudentCRM.Data.ApplicationDataBaseContext
         public DbSet<StudentResult> StudentResults { get; set; }
         public DbSet<Term> Terms{ get; set; }
         public DbSet<Course> Course{ get; set; }
+        public DbSet<Student> Students{ get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

@@ -82,7 +82,7 @@ var loadingModalHtml = `<div class="modal" id="loading-modal" data-bs-backdrop="
                 <h5 class="modal-title" id="exampleModalLabel">لطفا صبر کنید</h5>
             </div>
             <div class="modal-body text-center">
-                <img src="/images/application/loading.gif" />
+                <img src="/Images/loading.gif" />
             </div>
         </div>
     </div>
@@ -819,6 +819,7 @@ $(document).on('submit', 'form.Search-form-via-ajax', function (e) {
     $('.data-table-body').html('');
     $('[data-bs-toggle="tooltip"], .tooltip').tooltip("hide");
     $('#record-not-found-box').remove();
+
     $.get(`${location.pathname}?handler=GetDataTable`, formData, function (data, status) {
         isMainPaginationClicked = false;
         isGotoPageClicked = false;
@@ -923,6 +924,8 @@ function getDateWithAjax(url, formdata, functionNameToCallInTheEnd) {
         data: formdata,
         type: 'Get',
         dataType: 'json',
+        processData: false,
+        contentType: false,
         beforeSend: function () {
             showLoading();
         },
@@ -983,6 +986,7 @@ $(document).on('click', '.get-html-with-ajax', function () {
 // html
 // از سمت سرور
 function GetHtmlWithAjax(url, data, functionNameToCallInTheEnd, clickedButton) {
+    
     $.ajax({
         url: url,
         data: data,

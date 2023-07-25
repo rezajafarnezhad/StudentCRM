@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StudentCRM.Data.ApplicationDataBaseContext;
 
@@ -11,9 +12,10 @@ using StudentCRM.Data.ApplicationDataBaseContext;
 namespace StudentCRM.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230707172646_j")]
+    partial class j
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -209,39 +211,6 @@ namespace StudentCRM.Data.Migrations
                     b.ToTable("Course");
                 });
 
-            modelBuilder.Entity("StudentCRM.Data.Entities.Student", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<long>("StudentCode")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("StudentNumber")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("StudentCode")
-                        .IsUnique();
-
-                    b.HasIndex("StudentNumber")
-                        .IsUnique();
-
-                    b.ToTable("Student");
-                });
-
             modelBuilder.Entity("StudentCRM.Data.Entities.StudentResult", b =>
                 {
                     b.Property<int>("Id")
@@ -250,11 +219,21 @@ namespace StudentCRM.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(6)
+                        .HasColumnType("nvarchar(6)");
+
                     b.Property<int>("CourseId")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<float>("Score")
                         .HasColumnType("real");
@@ -262,20 +241,19 @@ namespace StudentCRM.Data.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<int>("StudentId")
-                        .HasColumnType("int");
+                    b.Property<string>("StudentNumber")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<int>("TermId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("StudentId");
+                    b.HasIndex("CourseId");
 
                     b.HasIndex("TermId");
-
-                    b.HasIndex("CourseId", "StudentId", "TermId")
-                        .IsUnique();
 
                     b.ToTable("StudentResult");
                 });
@@ -306,12 +284,6 @@ namespace StudentCRM.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("StudentCRM.Data.Entities.Student", "Student")
-                        .WithMany()
-                        .HasForeignKey("StudentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("StudentCRM.Data.Entities.Term", "Term")
                         .WithMany("StudentResults")
                         .HasForeignKey("TermId")
@@ -319,8 +291,6 @@ namespace StudentCRM.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Cours");
-
-                    b.Navigation("Student");
 
                     b.Navigation("Term");
                 });

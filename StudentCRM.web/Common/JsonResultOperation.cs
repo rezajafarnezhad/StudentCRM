@@ -17,6 +17,17 @@ public class JsonResultOperation
         Message = message;
     }
 }
+public class JsonResultOperationList
+{
+    public bool IsSuccessful { get; }
+    public string Message { get; }
+    public List<object> Data { get; set; } = new();
+    public JsonResultOperationList(bool isSuccessful, string message = "خطایی به وجود آمد")
+    {
+        IsSuccessful = isSuccessful;
+        Message = message;
+    }
+}
 
 public static class s
 {

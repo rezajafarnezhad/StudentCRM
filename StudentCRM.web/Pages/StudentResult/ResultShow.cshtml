@@ -1,51 +1,98 @@
 ﻿
-@model StudentCRM.ViewModel.StudentResult.ShowStudentResultInSite
+@model StudentCRM.ViewModel.StudentResult.ShowStudentInfoResult
 <div class="wrapper">
     <!-- start text box -->
-
     <div class="card">
         <div class="card-header border-transparent">
-            <h3 class="card-title text-center">نتیجه آزمون شما</h3>
+            <h3 class="card-title text-center">نتیجه آزمون های شما</h3>
         </div>
+    <div class="col-md-12">
+        <!-- Widget: user widget style 1 -->
+        <div class="card card-widget widget-user">
+            <!-- Add the bg color to the header using any of the bg-* classes -->
+           
+            <div class="card-footer">
+                <div class="row">
+                    <div class="col-4  border-left">
+                        <div class="description-block">
+                            <h6 class="description-header">نام و نام خانوادگی</h6>
+                            <span class="description-text">@Model.FullName</span>
+                        </div>
+                        <!-- /.description-block -->
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-4 border-left">
+                        <div class="description-block">
+                            <h6 class="description-header">شماره دانشجویی</h6>
+                            <span class="description-text">@Model.Number</span>
+                        </div>
+                        <!-- /.description-block -->
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-4">
+                        <div class="description-block">
+                            <h6 class="description-header">کد ملی</h6>
+                            <span class="description-text">@Model.Code</span>
+                        </div>
+                        <!-- /.description-block -->
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </div>
+        </div>
+        <!-- /.widget-user -->
+    </div>
+
+        
+
+     
         <!-- /.card-header -->
         <div class="card-body p-0">
+
+
+
             <div class="table-responsive">
                 <table class="table m-0">
                     <thead>
                         <tr>
-                            <th>شماره دانشجویی</th>
-                            <th>نام کامل</th>
                             <th>درس</th>
                             <th>نمره</th>
                             <th>ترم</th>
                             <th>وضعیت</th>
                             <th>پیام مدرس</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>@Model.StudentNumber</td>
-                            <td>@Model.FullName</td>
-                            <td>@Model.CourseName</td>
-                            <td>@Model.Score</td>
-                            <td>@Model.TermName</td>
-                            <td>
-                                @if (Model.Status == StudentCRM.Data.Entities.Status.accept.ToString())
-                                {
+                        @foreach (var item in Model.results)
+                        {
+                            <tr>
+                                <td>@item.CourseName</td>
+                                <td>@item.Score</td>
+                                <td>@item.TermName</td>
+                                <td>
+                                    @if (item.Status == StudentCRM.Data.Entities.Status.accept.ToString())
+                                    {
 
 
-                                    <span class="badge badge-success">قبول</span>
-                                }
-                                else
-                                {
-                                    <span class="badge badge-danger">مردود</span>
+                                        <span class="badge badge-success">قبول</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge badge-danger">مردود</span>
 
-                                }
-                            </td>
-                            <td>
-                                @Model.Description
-                            </td>
-                        </tr>
+                                    }
+                                </td>
+                                <td>
+                                    @item.Description
+                                </td>
+                                <td>
+                                    <a href="javascript:void(0)" class="btn btn-sm btn-info float-left">در خواست تحدبد نظر</a>
+                                </td>
+                            </tr>
+                        }
+
                     </tbody>
                 </table>
             </div>
@@ -53,7 +100,6 @@
         </div>
         <!-- /.card-body -->
         <div class="card-footer clearfix">
-            <a href="javascript:void(0)" class="btn btn-sm btn-info float-left">سفارش جدید</a>
             <a href="/StudentResult" class="btn btn-sm btn-secondary float-right">بستن</a>
         </div>
         <!-- /.card-footer -->

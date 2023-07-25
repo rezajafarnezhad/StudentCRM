@@ -11,6 +11,7 @@ namespace StudentCRM.Service.Contracts
     public interface IStudentResultService : IGenericService<StudentResult>
     {
         Task<ShowResults> GetStudentsResult(ShowResults model);
-        Task<ShowStudentResultInSite> GetResultForSite(string studentNumber, string Code);
+        Task<bool> CheckStudentIdAndCourseIdInTerm(int studentId, int courseId, int termId);
+        Task<ShowStudentInfoResult> GetResultsForStudent(int id);
     }
 }

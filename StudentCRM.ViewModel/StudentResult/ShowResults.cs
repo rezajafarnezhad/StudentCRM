@@ -34,12 +34,14 @@ namespace StudentCRM.ViewModel.StudentResult
 
         [Display(Name ="شماره دانشجویی")]
 
-        public string StudentNumber { get; set; }
+        public long StudentNumber { get; set; }
 
-        [Display(Name ="کد پیگیری")]
+        [Display(Name ="کد ملی")]
 
-        public string Code { get; set; }
-        
+        public long Code { get; set; }
+
+        public int StudentId { get; set; }
+
         [Display(Name ="نمره")]
 
         public float Score { get; set; }
@@ -67,11 +69,11 @@ namespace StudentCRM.ViewModel.StudentResult
 
         [Display(Name = "شماره دانشجویی")]
 
-        public string StudentNumber { get; set; }
+        public long? StudentNumber { get; set; }
 
-        [Display(Name = "کد پیگیری")]
+        [Display(Name = "کد ملی")]
 
-        public string Code { get; set; }
+        public long? Code { get; set; }
 
         [Display(Name = "نتیجه")]
         public StatusSearch Status { get; set; }
@@ -90,6 +92,10 @@ namespace StudentCRM.ViewModel.StudentResult
 
     public class CreateResult
     {
+
+        [Required(ErrorMessage = "الزامی است")]
+        public int StudentId { get; set; }
+
         [Display(Name = "درس")]
         [Required(ErrorMessage = "الزامی است")]
         [Range(0, int.MaxValue, ErrorMessage = "درست وارد شود")]
@@ -104,23 +110,6 @@ namespace StudentCRM.ViewModel.StudentResult
         public int TermId { get; set; }
         public List<SelectListItem> Terms { get; set; } = new();
 
-
-        [Display(Name = "نام و فامیلی")]
-        [Required(ErrorMessage = "الزامی است")]
-
-        public string FullName { get; set; }
-
-        [Display(Name = "شماره دانشجویی")]
-        [Required(ErrorMessage = "الزامی است")]
-        [MaxLength(20, ErrorMessage = "حداقل 6 کاراکتر")]
-
-
-        public string StudentNumber { get; set; }
-
-        [Display(Name = "کد پیگیری")]
-        [Required(ErrorMessage = "الزامی است")]
-        [MaxLength(6,ErrorMessage ="حداقل 6 کاراکتر")]
-        public string Code { get; set; }
         [Required(ErrorMessage = "الزامی است")]
 
         [Display(Name = "نتیجه")]
@@ -131,6 +120,8 @@ namespace StudentCRM.ViewModel.StudentResult
         [Required(ErrorMessage = "الزامی است")]
         [Range(0,100,ErrorMessage ="حدافل 0 تا 100")]
         public float Score { get; set; }
+
+        [Display(Name = "توضیحات")]
         public string Description { get; set; }
 
     }

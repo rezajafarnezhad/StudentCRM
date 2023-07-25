@@ -23,6 +23,7 @@ builder.Services.AddScoped<IUnitOfWork>(serviceProvider =>
 builder.Services.AddScoped<ItermService, termService>();
 builder.Services.AddScoped<ICourseService,CourseService>();
 builder.Services.AddScoped<IStudentResultService,StudentResultService>();
+builder.Services.AddScoped<IStudentService,StudentService>();
 
 
 

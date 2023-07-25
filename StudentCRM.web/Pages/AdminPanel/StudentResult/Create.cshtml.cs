@@ -14,24 +14,33 @@ public class CreateModel : PageBase
     private readonly IStudentResultService _studentResultService;
     private readonly ICourseService _courseService;
     private readonly ItermService _termService;
+    private readonly IStudentService _studentService;
 
-   [BindProperty(SupportsGet =true)]
+    [BindProperty(SupportsGet = true)]
     public CreateResult CreateResult { get; set; } = new CreateResult();
-    public CreateModel(ItermService termService, ICourseService courseService, IStudentResultService studentResultService, IUnitOfWork unitOfWork)
+    public CreateModel(ItermService termService, ICourseService courseService, IStudentResultService studentResultService, IUnitOfWork unitOfWork, IStudentService studentService)
     {
         _termService = termService;
         _courseService = courseService;
         _studentResultService = studentResultService;
         _unitOfWork = unitOfWork;
+        _studentService = studentService;
     }
 
-    public void OnGet()
+    public async Task OnGet(int id)
     {
         var Courses = _courseService.GetCourseToShowInSelectBox();
         CreateResult.Courses = Courses.CreateSelectListItem();
 
         var Terms = _termService.GetTermsToShowInSelectBox();
         CreateResult.Terms = Terms.CreateSelectListItem();
+
+        CreateResult.StudentId = id;
+
+        var StudentInfo = await _studentService.GetInfo(id);
+        ViewData["FullName"] = StudentInfo.Fullname;
+        ViewData["Code"] = StudentInfo.Code;
+        ViewData["Number"] = StudentInfo.Number;
     }
 
     public async Task<IActionResult> OnPost(CreateResult CreateResult)
@@ -43,21 +52,24 @@ public class CreateModel : PageBase
 
         var _StudentResult = new Data.Entities.StudentResult()
         {
-            Code= CreateResult.Code,
-            CourseId= CreateResult.CourseId,
-            TermId= CreateResult.TermId,
-            FullName = CreateResult.FullName,
+            StudentId = CreateResult.StudentId,
+            CourseId = CreateResult.CourseId,
+            TermId = CreateResult.TermId,
             Description = CreateResult.Description,
-            Score= CreateResult.Score,
-            Status= CreateResult.Status,
-            StudentNumber= CreateResult.StudentNumber,
+            Score = CreateResult.Score,
+            Status = CreateResult.Status,
+
         };
+
+        if(await _studentResultService.CheckStudentIdAndCourseIdInTerm(_StudentResult.StudentId,_StudentResult.CourseId,_StudentResult.TermId))
+            return Json(new JsonResultOperation(false, "اطلاعات تکراری است"));
+
 
         await _studentResultService.AddAsync(_StudentResult);
         await _unitOfWork.SaveChangesAsync();
-        return Json(new JsonResultOperation(true,"با موفقیت  ثبت شد")
+        return Json(new JsonResultOperation(true, "با موفقیت  ثبت شد")
         {
-            Data= "/AdminPanel/StudentResult"
+            Data = "/AdminPanel/StudentResult"
         });
     }
 }

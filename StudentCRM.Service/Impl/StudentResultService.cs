@@ -9,8 +9,10 @@ namespace StudentCRM.Service.Impl;
 public class StudentResultService : GenericService<StudentResult>, IStudentResultService
 {
     private readonly DbSet<StudentResult> _studentResult;
-    public StudentResultService(IUnitOfWork uow) : base(uow)
+    private readonly IStudentService _studentService;
+    public StudentResultService(IUnitOfWork uow, IStudentService studentService) : base(uow)
     {
+        _studentService = studentService;
         _studentResult = uow.Set<StudentResult>();
     }
 
@@ -20,14 +22,14 @@ public class StudentResultService : GenericService<StudentResult>, IStudentResul
         var studentsResult = _studentResult.AsNoTracking().AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(model.SearchResult.FullName))
-            studentsResult = studentsResult.Where(c => c.FullName.Contains(model.SearchResult.FullName));
+            studentsResult = studentsResult.Where(c => c.Student.FullName.Contains(model.SearchResult.FullName));
 
-        if (!string.IsNullOrWhiteSpace(model.SearchResult.Code))
-            studentsResult = studentsResult.Where(c => c.Code == model.SearchResult.Code);
+        if (model.SearchResult.Code != null)
+            studentsResult = studentsResult.Where(c => c.Student.StudentCode == model.SearchResult.Code);
 
 
-        if (!string.IsNullOrWhiteSpace(model.SearchResult.StudentNumber))
-            studentsResult = studentsResult.Where(c => c.StudentNumber == model.SearchResult.StudentNumber);
+        if (model.SearchResult.StudentNumber != null)
+            studentsResult = studentsResult.Where(c => c.Student.StudentNumber == model.SearchResult.StudentNumber);
 
         if (model.SearchResult.CourseId > 0)
             studentsResult = studentsResult.Where(c => c.CourseId == model.SearchResult.CourseId);
@@ -59,13 +61,13 @@ public class StudentResultService : GenericService<StudentResult>, IStudentResul
             Results = await paginationResult.Query.Select(c => new ShowResult()
             {
                 Id = c.Id,
-                StudentNumber = c.StudentNumber,
-                Code = c.Code,
-                FullName = c.FullName,
                 CourseName = c.Cours.Name,
                 TermName = c.Term.Name,
                 Status = c.Status,
                 Score = c.Score,
+                Code=c.Student.StudentCode,
+                StudentNumber = c.Student.StudentNumber,
+                FullName = c.Student.FullName,
 
             }).ToListAsync(),
 
@@ -73,24 +75,33 @@ public class StudentResultService : GenericService<StudentResult>, IStudentResul
         };
     }
 
-    public async Task<ShowStudentResultInSite> GetResultForSite(string studentNumber, string Code)
+    public async Task<bool> CheckStudentIdAndCourseIdInTerm(int studentId, int courseId, int termId)
     {
-        var res = await _studentResult
-            .Where(c => c.StudentNumber == studentNumber)
-            .Where(c => c.Code == Code)
-            .Select(c=> new ShowStudentResultInSite()
-            {
-                TermName = c.Term.Name,
-                CourseName=c.Cours.Name,
-                FullName=c.FullName,
-                Description = c.Description,
-                Score = c.Score,
-                Status=c.Status.ToString(),
-                StudentNumber=c.StudentNumber,
-            })
-            .SingleOrDefaultAsync();
+        return await _studentResult.AnyAsync(c => c.StudentId == studentId && c.CourseId == courseId && c.TermId == termId);
+    }
 
-        return res;
+    public async Task<ShowStudentInfoResult> GetResultsForStudent(int id)
+    {
+        
+        var studentInfo = await _studentService.GetInfo(id);
+        return new ShowStudentInfoResult()
+        {
+            FullName = studentInfo.Fullname,
+            Number=studentInfo.Number,
+            Code=studentInfo.Code,
+            results = await _studentResult.Where(c => c.StudentId == id)
+                .Select(c => new ShowStudentResultInSite()
+                {
+                    CourseName = c.Cours.Name,
+                    Description = c.Description,
+                    Score = c.Score,
+                    TermName = c.Term.Name,
+                    Status = c.Status.ToString(),
+                })
+                .ToListAsync()
+        };
 
     }
+
+   
 }

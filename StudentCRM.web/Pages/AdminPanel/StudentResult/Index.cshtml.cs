@@ -51,30 +51,7 @@ public class IndexModel : PageBase
     }
 
 
-    public async Task<IActionResult> OnGetAdd()
-    {
-        var model = new CreateResult
-        {
-            Terms = _termService.GetTermsToShowInSelectBox().CreateSelectListItem(firstItemValue: String.Empty),
-            Courses = _courseService.GetCourseToShowInSelectBox().CreateSelectListItem(firstItemValue: String.Empty),
-            
-        };
-
-        return Partial("Add",model);
-    }
-
-    public async Task<IActionResult> OnPostAdd(CreateResult model)
-    {
-        if (!ModelState.IsValid)
-        {
-            return Json(new JsonResultOperation(false, "لطفا مقادیر را به درستی وارد نمایید")
-            {
-               
-            });
-        }
-
-        return default;
-    }
+   
 
 
 }

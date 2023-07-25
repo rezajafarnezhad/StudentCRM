@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StudentCRM.Data.ApplicationDataBaseContext;
 
@@ -11,9 +12,10 @@ using StudentCRM.Data.ApplicationDataBaseContext;
 namespace StudentCRM.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230725034648_stdenlong")]
+    partial class stdenlong
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -270,12 +272,11 @@ namespace StudentCRM.Data.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CourseId");
+
                     b.HasIndex("StudentId");
 
                     b.HasIndex("TermId");
-
-                    b.HasIndex("CourseId", "StudentId", "TermId")
-                        .IsUnique();
 
                     b.ToTable("StudentResult");
                 });
@@ -307,7 +308,7 @@ namespace StudentCRM.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("StudentCRM.Data.Entities.Student", "Student")
-                        .WithMany()
+                        .WithMany("StudentResults")
                         .HasForeignKey("StudentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -326,6 +327,11 @@ namespace StudentCRM.Data.Migrations
                 });
 
             modelBuilder.Entity("StudentCRM.Data.Entities.Course", b =>
+                {
+                    b.Navigation("StudentResults");
+                });
+
+            modelBuilder.Entity("StudentCRM.Data.Entities.Student", b =>
                 {
                     b.Navigation("StudentResults");
                 });

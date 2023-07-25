@@ -1,0 +1,43 @@
+﻿
+
+
+
+@model StudentCRM.ViewModel.Student.EditStudent
+
+<form class="alert alert-secondary custom-ajax-form" asp-page-handler="Edit" method="post" call-function-in-the-end="FuncAdd">
+    
+    <input type="hidden" asp-for="Id" />
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="row">
+        <div class="col-12 col-sm-12 col-lg-12 my-2">
+            <label class="form-label" asp-for="FirstName"></label>
+            <input class="form-control" asp-for="FirstName" />
+            <span class="span-error-message" asp-validation-for="FirstName"></span>
+        </div>
+        <div class="col-12 col-sm-12 col-lg-12 my-2">
+            <label class="form-label" asp-for="LastName"></label>
+            <input class="form-control" asp-for="LastName" />
+            <span class="span-error-message" asp-validation-for="LastName"></span>
+        </div>
+        <div class="col-12 col-sm-12 col-lg-12 my-2">
+            <label class="form-label" asp-for="StudentCode"></label>
+            <input class="form-control" asp-for="StudentCode" />
+            <span class="span-error-message" asp-validation-for="StudentCode"></span>
+        </div>
+        <div class="col-12 col-sm-12 col-lg-12 my-2">
+            <label class="form-label" asp-for="StudentNumber"></label>
+            <input class="form-control" asp-for="StudentNumber" />
+            <span class="span-error-message" asp-validation-for="StudentNumber"></span>
+        </div>
+
+        <div class="col-12 my-2">
+            <div class="d-grid">
+
+                <button type="submit" class="btn btn-app btn-block  submit-custom-ajax-button">
+                    <i class="fa fa-save"> ویرابش</i>
+                </button>
+            </div>
+
+        </div>
+    </div>
+</form>
